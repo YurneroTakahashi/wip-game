@@ -6,7 +6,7 @@ class_name EdgeSpawner
 @export var spawn_burst_size: int = 1        # Сколько врагов спавнить за раз
 @export var max_enemies_total: int = 30      # Максимум врагов на карте
 @export var wave_size: int = 10              # Размер волны
-@export var time_between_waves: float = 5.0  # Время между волнами
+@export var time_between_waves: float = 1.0  # Время между волнами
 
 var current_wave: int = 0
 var enemies_in_current_wave: int = 0
@@ -57,7 +57,7 @@ func _start_next_wave():
 	# Увеличиваем сложность с каждой волной
 	var wave_multiplier = 1.0 + (current_wave - 1) * 0.2
 	spawn_burst_size = clamp(1 + current_wave / 3, 1, 8)
-	spawn_interval = max(0.5, 2.0 - current_wave * 0.1)
+	#spawn_interval = max(0.5, 2.0 - current_wave * 0.1)
 	
 	print("Wave ", current_wave, " started! Spawning ", wave_size * wave_multiplier, " enemies")
 

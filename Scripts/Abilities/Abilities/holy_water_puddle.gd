@@ -2,7 +2,7 @@ extends Node3D
 
 # Параметры лужи (меняй здесь для баланса)
 var duration: float = 5.0           # Сколько секунд существует
-var damage_per_second: int = 1.5     # Урон в секунду
+var damage_per_second: int = 15     # Урон в секунду
 var radius: float = 3.0             # Радиус поражения
 var tick_rate: float = 0.1          # Как часто наносить урон
 

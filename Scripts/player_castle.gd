@@ -3,11 +3,11 @@ extends CharacterBody3D
 
 @export var passive_damage: int = 15      # Урон пассивной атаки
 @export var passive_cooldown: float = 1.0 # Раз в секунду бьем всех вокруг
-@export var passive_range: float = 5.0    # Радиус поражения
+@export var passive_range: float = 8.0    # Радиус поражения
 
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var area_3d: Area3D = $PassiveAttackArea
-
+var debug_label: Label3D
 var passive_attack_timer: float = 0.0
 
 func _ready():
@@ -17,6 +17,11 @@ func _ready():
 	# Настраиваем область для визуальной индикации (опционально)
 	if area_3d:
 		area_3d.body_entered.connect(_on_enemy_entered_attack_area)
+	debug_label = Label3D.new()
+	debug_label.text = str("Хп церкви:",health_component.current_health)
+	debug_label.pixel_size = 0.20
+	debug_label.position = Vector3(0, 13, 0)
+	add_child(debug_label)
 
 func _process(delta):
 	if not GameManager.is_game_active:
@@ -27,6 +32,7 @@ func _process(delta):
 	if passive_attack_timer >= passive_cooldown:
 		passive_attack_timer = 0.0
 		_perform_passive_attack()
+	
 
 func _perform_passive_attack():
 	# Находим всех врагов в радиусе

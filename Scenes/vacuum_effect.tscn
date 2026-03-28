@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bfiqbnvw8iwc6"]
+
+[ext_resource type="Script" uid="uid://cyljvx4ldhmkb" path="res://Scripts/Abilities/Abilities/vacuum_effect.gd" id="1_2h26n"]
+
+[node name="VacuumEffect" type="Node3D" unique_id=2075127708]
+script = ExtResource("1_2h26n")

@@ -10,6 +10,7 @@ var target_castle: Node3D
 var navigation_agent: NavigationAgent3D
 var debug_label: Label3D
 var is_navigation_initialized: bool = false
+var is_moving: bool = true
 
 func _ready():
 	add_to_group("enemies")
@@ -70,6 +71,10 @@ func _initialize_navigation():
 		print("Target position: ", target_castle.global_position)
 
 func _physics_process(delta):
+	if not is_moving:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		return
 	if not GameManager.is_game_active:
 		velocity = Vector3.ZERO
 		move_and_slide()
@@ -132,3 +137,17 @@ func take_damage(amount: int):
 func _die():
 	print("Enemy died at: ", global_position)
 	queue_free()
+	
+func set_moving(moving: bool):
+	is_moving = moving
+	if not moving:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		print("Enemy movement stopped")
+
+# Добавь метод обновления навигации
+func update_navigation():
+	if navigation_agent and target_castle:
+		navigation_agent.target_position = target_castle.global_position
+		print("Enemy navigation updated")
+	

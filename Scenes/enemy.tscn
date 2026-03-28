@@ -8,10 +8,6 @@
 
 [node name="enemy" type="CharacterBody3D" unique_id=250622314]
 script = ExtResource("1_hghv2")
-speed = null
-damage_to_castle = null
-health = null
-arrival_distance = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1375603377]
 mesh = SubResource("CapsuleMesh_1f0kj")

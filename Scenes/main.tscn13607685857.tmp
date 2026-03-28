@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cwp2sqogkeen2"]
+
+[ext_resource type="Script" uid="uid://t83j3dwjk2nq" path="res://Scenes/main.gd" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://vyinsluaq7wt" path="res://Scenes/player_castle.tscn" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://bk2i6xjx6qbv" path="res://Scripts/enemy_spawner.gd" id="3_8gbba"]
+
+[sub_resource type="Environment" id="Environment_7u77a"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_jjgbg"]
+
+[sub_resource type="Compositor" id="Compositor_bo1nx"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_8gbba"]
+vertices = PackedVector3Array(-65.19301, 0.5, -59.769295, -65.19301, 0.5, 59.730705, 65.30699, 0.5, 59.730705, 65.30699, 0.5, -59.769295)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8gbba"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jjvhh"]
+
+[node name="Main" type="Node3D" unique_id=1424662665]
+script = ExtResource("1_jjgbg")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1375282108]
+transform = Transform3D(1, 0, 0, 0, 0.4810348, 0.8767016, 0, -0.8767016, 0.4810348, 0, 18.880527, 18.782467)
+fov = 91.6
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=765643644]
+environment = SubResource("Environment_7u77a")
+camera_attributes = SubResource("CameraAttributesPractical_jjgbg")
+compositor = SubResource("Compositor_bo1nx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1919442384]
+transform = Transform3D(1, 0, 0, 0, 0.24146463, 0.97040963, 0, -0.97040963, 0.24146463, 0, 4.077274, -0.25274563)
+
+[node name="PlayerCastle" parent="." unique_id=1418699478 instance=ExtResource("2_bo1nx")]
+
+[node name="EdgeSpawner" type="Node" parent="." unique_id=572140672]
+script = ExtResource("3_8gbba")
+metadata/_custom_type_script = "uid://bk2i6xjx6qbv"
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1699274548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37355423, 0.2173233, -0.116874695)
+navigation_mesh = SubResource("NavigationMesh_8gbba")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" unique_id=2053294243]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" unique_id=1322155190]
+shape = SubResource("WorldBoundaryShape3D_8gbba")
+debug_color = Color(0.73059726, 0.39120156, 0.69431114, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D" unique_id=734291081]
+transform = Transform3D(65.69301, 0, 0, 0, 1, 0, 0, 0, 60.269295, 0, 0, 0)
+mesh = SubResource("PlaneMesh_jjvhh")

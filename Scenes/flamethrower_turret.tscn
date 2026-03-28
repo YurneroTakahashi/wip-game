@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dbqdx06l8pmf3"]
+
+[ext_resource type="Script" uid="uid://cvm2ctplqek2j" path="res://Scripts/Abilities/Abilities/flamethrower_turret.gd" id="1_anm6h"]
+
+[node name="FlamethrowerTurret" type="Node3D" unique_id=2024162409]
+script = ExtResource("1_anm6h")

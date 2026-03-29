@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://vyinsluaq7wt" path="res://Scenes/player_castle.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://bk2i6xjx6qbv" path="res://Scripts/enemy_spawner.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://sqh0nqryvljn" path="res://zemlya.fbx" id="4_jjvhh"]
-[ext_resource type="AudioStream" uid="uid://dwvhf6ocg16di" path="res://FULL_AUDIO_MUSIC_SOUNDS.wav" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://dxsyjx7tpjr24" path="res://forest.fbx" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://cumigsaahbmeg" path="res://Scenes/hud.tscn" id="6_21xkr"]
 
@@ -140,16 +139,16 @@ script = ExtResource("1_jjgbg")
 
 [node name="Camera3D2" type="Camera3D" parent="." unique_id=827884670]
 transform = Transform3D(0.73229325, 0.12761635, 0.66892487, 7.4505793e-09, 0.982284, -0.18739846, -0.68098915, 0.13723065, 0.71932006, -30.848436, 0.7219097, 25.87849)
-visible = false
 fov = 31.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D2" unique_id=1466118747]
+active = false
+root_node = NodePath("../../Camera3D")
+libraries/ = SubResource("AnimationLibrary_6bp64")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1375282108]
 transform = Transform3D(0.7071068, -0.6199216, 0.34014294, 0, 0.4810348, 0.87670153, -0.7071068, -0.6199216, 0.34014294, 22.912882, 47.44066, 22.643925)
 fov = 70.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D" unique_id=1466118747]
-active = false
-libraries/ = SubResource("AnimationLibrary_6bp64")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=765643644]
 environment = SubResource("Environment_7u77a")
@@ -204,8 +203,8 @@ mesh = SubResource("PlaneMesh_jjvhh")
 [node name="zemlya" parent="." unique_id=903034683 instance=ExtResource("4_jjvhh")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=390036198]
-stream = ExtResource("5_kry3j")
 autoplay = true
+
 [node name="forest" parent="." unique_id=1084070509 instance=ExtResource("5_kry3j")]
 transform = Transform3D(-0.92418647, 0, 0.3819415, 0, 1, 0, -0.3819415, 0, -0.92418647, -45.60851, 0.21799445, -50.893932)
 

@@ -47,7 +47,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 24.709938, 18.491655), Vector3(0, 28.640072, 26.136995)]
+"values": [Vector3(0, 24.709938, 18.491655), Vector3(0, 33.626736, 26.725641)]
 }
 
 [sub_resource type="Animation" id="Animation_21xkr"]

@@ -78,9 +78,9 @@ func _input(event):
 		match event.keycode:
 			KEY_Q:
 				_select_ability("vacuum")
-			KEY_E:
+			KEY_W:
 				_select_ability("poison")
-			KEY_R:
+			KEY_E:
 				_select_ability("flamethrower")
 			KEY_ESCAPE:
 				_cancel_ability_selection()

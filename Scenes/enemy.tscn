@@ -335,6 +335,7 @@ shape = SubResource("CapsuleShape3D_afpow")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=843823188]
 
 [node name="girl_run" parent="." unique_id=696517531 instance=ExtResource("2_afpow")]
+visible = false
 
 [node name="Skeleton3D" parent="girl_run" index="0" unique_id=708018642]
 bones/0/position = Vector3(0.0056327833, 0.79460573, -0.004148729)

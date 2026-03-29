@@ -203,19 +203,25 @@ func _try_spawn_enemy_batch():
 		_set_phase(current_phase_idx)
 
 func _spawn_single_enemy():
-	var enemy = enemy_scene.instantiate()
-	enemy.scale = Vector3(4.0,4.0,4.0)
-	var spawn_pos = map_manager.get_random_edge_position()
+	var enemy_instance = enemy_scene.instantiate()
+	var spawn_position = map_manager.get_random_edge_position()
 	
-	spawn_pos.x += randf_range(-1.0, 1.0)
-	spawn_pos.z += randf_range(-1.0, 1.0)
-	enemy.global_position = spawn_pos	
+	spawn_position.x += randf_range(-1.0, 1.0)
+	spawn_position.z += randf_range(-1.0, 1.0)
 	
-	if enemy.has_method("set_target"):
-		enemy.set_target(map_manager.castle_position)
-	get_tree().current_scene.add_child(enemy)
-	enemy._setup_type(1)
-
+	enemy_instance.global_position = spawn_position
+	
+	# ВАЖНО: вызываем ДО добавления в сцену
+	var enemy_type = randi() % 2
+	
+	
+	if enemy_instance.has_method("set_target"):
+		enemy_instance.set_target(map_manager.castle_position)
+	get_tree().current_scene.add_child(enemy_instance)
+	enemy_instance.setup_type(enemy_type)
+	
+	
+	print("[SPAWNER] Spawned enemy type: ", "SPEEDSTER" if enemy_type == 1 else "NORMAL")
 func _spawn_single_civ():
 	var civ = civilian_scene.instantiate()
 	var spawn_pos = map_manager.get_random_edge_position()

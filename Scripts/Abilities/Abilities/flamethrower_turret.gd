@@ -29,40 +29,6 @@ func _ready():
 	_destroy()
 
 func _setup_visuals():
-	# Тело турели
-	turret_body = MeshInstance3D.new()
-	turret_body.mesh = BoxMesh.new()
-	(turret_body.mesh as BoxMesh).size = Vector3(1.0, 0.5, 1.0)
-	
-	var body_material = StandardMaterial3D.new()
-	body_material.albedo_color = Color(0.3, 0.3, 0.5)
-	turret_body.material_override = body_material
-	turret_body.position.y = 0.25
-	add_child(turret_body)
-	
-	# Голова турели
-	turret_head = MeshInstance3D.new()
-	turret_head.mesh = BoxMesh.new()
-	(turret_head.mesh as BoxMesh).size = Vector3(0.8, 0.4, 1.0)
-	
-	var head_material = StandardMaterial3D.new()
-	head_material.albedo_color = Color(0.9, 0.2, 0.2)
-	turret_head.material_override = head_material
-	turret_head.position.y = 0.6
-	add_child(turret_head)
-	
-	# Сопло
-	nozzle = MeshInstance3D.new()
-	nozzle.mesh = CylinderMesh.new()
-	(nozzle.mesh as CylinderMesh).top_radius = 0.15
-	(nozzle.mesh as CylinderMesh).bottom_radius = 0.2
-	(nozzle.mesh as CylinderMesh).height = 0.4
-	
-	var nozzle_material = StandardMaterial3D.new()
-	nozzle_material.albedo_color = Color(1, 0.5, 0)
-	nozzle.material_override = nozzle_material
-	nozzle.position = Vector3(0, 0.6, 0.65)
-	add_child(nozzle)
 	
 	# Маркер направления (стрелка)
 	var arrow = MeshInstance3D.new()
@@ -76,6 +42,8 @@ func _setup_visuals():
 	arrow.material_override = arrow_material
 	arrow.position = Vector3(0, 0.8, 0.8)
 	add_child(arrow)
+	var direction = (arrow.global_position - global_position).normalized()
+	rotation.y = atan2(direction.x, direction.z)
 
 func _draw_cone_visual():
 	# Удаляем старые визуальные элементы если есть

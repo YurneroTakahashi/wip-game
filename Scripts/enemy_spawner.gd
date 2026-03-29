@@ -14,23 +14,41 @@ class_name EdgeSpawner
 @export var civ_spawn_interval: float = 2.0
 
 # Параметры волн
-@export var time_between_waves: float = 0.0        # Время на торг между волнами (7-15 сек)
-@export var wave_start_delay: float = .0           # Задержка перед началом волны после торга
+@export var time_between_waves: float = 5.0        # Время на торг между волнами (7-15 сек)
+@export var wave_start_delay: float = 0.0          # Задержка перед началом волны после торга
 
-# Параметры баланса врагов
-@export var warmup_enemies_base: int = 3
-@export var warmup_enemies_scaling: float = 1.5
-@export var battle_enemies_base: int = 8
-@export var battle_enemies_scaling: float = 4.0
-@export var break_enemies_base: int = 4
-@export var break_enemies_scaling: float = 2.0
+# Паттерны спавна по волнам (максимально близко к старой логике, но без формул и экспоненциального разгона)
+const TOTAL_WAVES: int = 5
+const PHASE_TYPES: Array[String] = ["warmup", "battle", "break", "epicbattle"]
 
-# Параметры гражданских
-@export var civilians_per_wave_base: int = 5
-@export var civilians_per_wave_scaling: float = 2.0
+const ENEMY_PHASE_COUNTS := [
+	[2, 5, 3, 7],
+	[3, 5, 3, 8],
+	[4, 7, 3, 8],
+	[4, 8, 4, 10],
+	[5, 9, 5, 11]
+]
 
-@export var boss_scene: PackedScene
-@export var boss_wave_interval: int = 3  # Босс появляется каждые 3 волны
+const ENEMY_PHASE_INTERVALS := [
+	[1.8, 1.60, 1.60, 1.50],
+	[1.6, 1.55, 1.40, 1.48],
+	[1.5, 1.50, 1.20, 1.45],
+	[1.4, 1.48, 1.10, 1.42],
+	[1.3, 1.45, 1.00, 1.40]
+]
+
+const PHASE_SPEEDSTER_RATIOS := [
+	[0.15, 0.25, 0.20, 0.35],
+	[0.20, 0.30, 0.25, 0.40],
+	[0.25, 0.35, 0.30, 0.45],
+	[0.30, 0.40, 0.35, 0.50],
+	[0.35, 0.45, 0.40, 0.55]
+]
+
+const CIVILIANS_PER_WAVE := [5, 6, 7, 8, 9]
+const TIME_BETWEEN_WAVES := [5.0, 5.0, 5.0, 5.0, 5.0]   # можешь увеличить, если нужно
+const WAVE_START_DELAYS := [2.0, 2.0, 2.0, 2.0, 2.0]
+
 
 @onready var player_castle: CharacterBody3D = $"../PlayerCastle"
 
@@ -42,6 +60,7 @@ var enemies_to_spawn_in_phase: int = 0
 var civilians_to_spawn_in_wave: int = 0
 var civilians_spawned: int = 0
 var civilians_saved: int = 0                       # Гражданские, дошедшие до замка
+var current_speedster_ratio: float = 0.25
 
 # Состояния спавнера
 enum SpawnerState { BETWEEN_WAVES, WAVE_START_DELAY, WAVE_ACTIVE }
@@ -50,21 +69,21 @@ var current_state: SpawnerState = SpawnerState.BETWEEN_WAVES
 var state_timer: float = 0.0
 var spawn_timer: float = 0.0
 var civ_timer: float = 0.0
-signal wave_started(wave_number: int)
-signal wave_ended(wave_number: int, civilians_saved: int)
-signal trading_phase_started(time_remaining: float)
 
 @onready var map_manager: MapManager = null
+
+# Сигналы для UI
+signal wave_ended(wave_number: int, civilians_saved: int)
+signal wave_started(wave_number: int)
+signal trading_phase_started(time_remaining: float)
 
 func _ready():
 	add_to_group("spawners")
 	
 	if not enemy_scene:
-		enemy_scene = preload("res://Scenes/Enemy.tscn")
+		enemy_scene = preload("res://Scenes/enemy.tscn")
 	if not civilian_scene:
 		civilian_scene = preload("res://Scenes/civilian.tscn")
-	if not boss_scene:
-		boss_scene = preload("res://Scenes/boss.tscn")
 	
 	map_manager = get_node("/root/Map_Manager")
 	if map_manager == null:
@@ -114,15 +133,26 @@ func _update_wave(delta):
 			civilians_spawned += 1
 	
 	# Проверка окончания волны
-	if enemies_to_spawn_in_phase == 0 and current_phase_idx >= phases.size():
+	var current_enemies = get_tree().get_nodes_in_group("enemies").size()
+	if enemies_to_spawn_in_phase == 0 and current_phase_idx >= phases.size() and current_enemies == 0:
 		_end_wave()
 
 func _start_next_wave():
+	if current_wave >= TOTAL_WAVES:
+		GameManager.victory()
+		return
+
 	current_wave += 1
 	civilians_spawned = 0
 	civilians_saved = 0
-	civilians_to_spawn_in_wave = int(civilians_per_wave_base + (current_wave - 1) * civilians_per_wave_scaling)
-	wave_started.emit(current_wave)
+	spawn_timer = 0.0
+	civ_timer = 0.0
+
+	var wave_idx = current_wave - 1
+	time_between_waves = TIME_BETWEEN_WAVES[wave_idx]
+	wave_start_delay = WAVE_START_DELAYS[wave_idx]
+	civilians_to_spawn_in_wave = CIVILIANS_PER_WAVE[wave_idx]
+	
 	# Генерируем фазы
 	_generate_phases()
 	current_phase_idx = 0
@@ -142,7 +172,6 @@ func _activate_wave():
 	
 	print("=== Wave ", current_wave, " STARTED! ===")
 	wave_started.emit(current_wave)
-	#_spawn_boss()
 
 func _end_wave():
 	current_state = SpawnerState.BETWEEN_WAVES
@@ -160,20 +189,23 @@ func _end_wave():
 
 func _generate_phases():
 	phases.clear()
-	
-	var warmup_count = int(warmup_enemies_base + (current_wave - 1) * warmup_enemies_scaling)
-	if warmup_count > 0:
-		phases.append({"type": "warmup", "count": warmup_count})
-	
-	var cycles = current_wave
-	
-	for i in range(cycles):
-		var battle_count = int(battle_enemies_base + (current_wave - 1) * battle_enemies_scaling)
-		phases.append({"type": "battle", "count": battle_count})
-		
-		if i < cycles - 1:
-			var break_count = int(break_enemies_base + (current_wave - 1) * break_enemies_scaling)
-			phases.append({"type": "break", "count": break_count})
+
+	var wave_idx = current_wave - 1
+	var phase_counts = ENEMY_PHASE_COUNTS[wave_idx]
+	var phase_intervals = ENEMY_PHASE_INTERVALS[wave_idx]
+	var phase_speedsters = PHASE_SPEEDSTER_RATIOS[wave_idx]
+
+	for i in range(PHASE_TYPES.size()):
+		var phase_count = int(phase_counts[i])
+		if phase_count <= 0:
+			continue
+
+		phases.append({
+			"type": PHASE_TYPES[i],
+			"count": phase_count,
+			"interval": float(phase_intervals[i]),
+			"speedster_ratio": float(phase_speedsters[i])
+		})
 
 func _set_phase(idx: int):
 	if idx >= phases.size():
@@ -181,8 +213,10 @@ func _set_phase(idx: int):
 		return
 	
 	var phase = phases[idx]
-	enemies_to_spawn_in_phase = phase["count"]
-	print("Phase ", idx+1, "/", phases.size(), ": ", phase["type"], " (", enemies_to_spawn_in_phase, " enemies)")
+	enemies_to_spawn_in_phase = int(phase["count"])
+	spawn_interval = float(phase.get("interval", spawn_interval))
+	current_speedster_ratio = float(phase.get("speedster_ratio", current_speedster_ratio))
+	print("Phase ", idx + 1, "/", phases.size(), ": ", phase["type"], " (", enemies_to_spawn_in_phase, " enemies, interval=", spawn_interval, ", speedsters=", current_speedster_ratio, ")")
 
 func _try_spawn_enemy_batch():
 	if enemies_to_spawn_in_phase <= 0:
@@ -214,17 +248,18 @@ func _spawn_single_enemy():
 	
 	enemy_instance.global_position = spawn_position
 	
-	# ВАЖНО: вызываем ДО добавления в сцену
-	var enemy_type = randi() % 2
-	
+	# Тип врага зависит от текущей фазы, а не от случайного 50/50
+	var enemy_type = 0
+	if randf() < current_speedster_ratio:
+		enemy_type = 1
 	
 	if enemy_instance.has_method("set_target"):
 		enemy_instance.set_target(map_manager.castle_position)
 	get_tree().current_scene.add_child(enemy_instance)
 	enemy_instance.setup_type(enemy_type)
 	
-	
 	print("[SPAWNER] Spawned enemy type: ", "SPEEDSTER" if enemy_type == 1 else "NORMAL")
+
 func _spawn_single_civ():
 	var civ = civilian_scene.instantiate()
 	var spawn_pos = map_manager.get_random_edge_position()
@@ -241,25 +276,3 @@ func _spawn_single_civ():
 
 func _on_civilian_saved():
 	civilians_saved += 1
-	print("Civilian saved! Total: ", civilians_saved, "/", civilians_to_spawn_in_wave)
-
-func get_civilians_saved_this_wave() -> int:
-	return civilians_saved
-
-func get_civilians_to_save() -> int:
-	return civilians_to_spawn_in_wave
-
-
-func _spawn_boss():
-	if not boss_scene:
-		print("ERROR: Boss scene not assigned!")
-		return
-	
-	var boss = boss_scene.instantiate()
-	var spawn_pos = map_manager.get_random_edge_position()
-	spawn_pos.x += randf_range(-2.0, 2.0)
-	spawn_pos.z += randf_range(-2.0, 2.0)
-	boss.global_position = spawn_pos
-	
-	get_tree().current_scene.add_child(boss)
-	print("BOSS SPAWNED at wave ", current_wave)

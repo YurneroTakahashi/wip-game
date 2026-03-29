@@ -12,16 +12,6 @@ var tick_timer: float = 0.0
 
 func _ready():
 	# Добавляем простой визуал - просто небольшая сфера для отладки
-	var simple_mesh = MeshInstance3D.new()
-	simple_mesh.mesh = BoxMesh.new()
-	simple_mesh.scale = Vector3(radius,0.3, radius)
-	
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(0.114, 0.784, 0.843, 0.788)  # Полупрозрачный зеленый
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	simple_mesh.material_override = material
-	
-	add_child(simple_mesh)
 	
 	print("Poison puddle ready! Duration: ", duration, "s, Damage: ", damage_per_second, "/s")
 

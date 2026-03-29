@@ -15,6 +15,8 @@ var ability_state: AbilityState = AbilityState.NONE
 var preview_node: Node3D = null
 var direction_preview: Node3D = null
 var temp_position: Vector3 = Vector3.ZERO
+@onready var animation_player: AnimationPlayer = $Camera3D2/AnimationPlayer
+@onready var camera_3d: Camera3D = $Camera3D
 
 func _ready():
 	# Настраиваем MapManager
@@ -24,7 +26,9 @@ func _ready():
 		map_manager.castle_position = castle.global_position
 	
 	# Подключаем сигналы GameManager
-	
+	animation_player.play("intro_animation")
+	await animation_player.animation_finished
+	camera_3d.current = true
 	# Создаем визуальные границы (опционально)
 	
 	_show_position_preview()

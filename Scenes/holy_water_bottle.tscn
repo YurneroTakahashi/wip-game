@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://cevldbshknlgc"]
+
+[ext_resource type="PackedScene" uid="uid://bcmhb61n8fflq" path="res://bottle.fbx" id="1_r53po"]
+[ext_resource type="Script" uid="uid://cbafuj6rbpiup" path="res://Scripts/Abilities/Abilities/holy_water_bottle.gd" id="1_twflf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twflf"]
+transparency = 1
+albedo_color = Color(0.09411765, 0.76862746, 0.76862746, 0.21176471)
+clearcoat = 0.0
+clearcoat_roughness = 1.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_duc6s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdjqh"]
+albedo_color = Color(0.70752555, 0.53456527, 0, 0.6666667)
+metallic = 1.0
+metallic_specular = 0.05
+metallic_texture = SubResource("PlaceholderTexture2D_duc6s")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_twflf"]
+height = 4.5965576
+radius = 1.046875
+
+[node name="Node3D" type="RigidBody3D" unique_id=438065007]
+script = ExtResource("1_twflf")
+
+[node name="bottle" parent="." unique_id=2013388718 instance=ExtResource("1_r53po")]
+
+[node name="Cylinder_001" parent="bottle" index="0" unique_id=2127933233]
+surface_material_override/0 = SubResource("StandardMaterial3D_twflf")
+
+[node name="Cylinder_003" parent="bottle" index="1" unique_id=1540247947]
+surface_material_override/0 = SubResource("StandardMaterial3D_jdjqh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=541235464]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6290894, 0)
+shape = SubResource("CylinderShape3D_twflf")
+
+[editable path="bottle"]

@@ -4,7 +4,7 @@ extends Node
 # Сигналы для событий игры
 signal game_over(victory: bool)
 signal mana_changed(current_mana: int, max_mana: int)
-signal castle_damaged(current_hp: int, max_hp: int)
+
 # Балансные параметры (будем менять здесь для тюнинга)
 @export var max_mana: int = 600
 @export var mana_regen_rate: float = 10.0  # единиц в секунду

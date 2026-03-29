@@ -342,7 +342,7 @@ shape = SubResource("BoxShape3D_eeqex")
 [node name="charch_anim" parent="." unique_id=177845916 instance=ExtResource("3_eeqex")]
 
 [node name="charch" parent="charch_anim" index="0" unique_id=853035954]
-transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 60.331757, 0)
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, -2.5887356, 0)
 
 [node name="bell" parent="charch_anim/charch" index="0" unique_id=531576131]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.790731e-05, -7.933639e-06, 0.0021599198)
@@ -353,10 +353,8 @@ libraries/ = SubResource("AnimationLibrary_75h1o")
 [node name="stage_1" parent="." unique_id=1905799440 instance=ExtResource("4_1oybr")]
 
 [node name="stage_2" parent="." unique_id=1396932878 instance=ExtResource("5_fy1pg")]
-visible = false
 
 [node name="stage_3" parent="." unique_id=1912996612 instance=ExtResource("6_4jblk")]
-visible = false
 
 [node name="zemlya_anim" parent="." unique_id=285873050 instance=ExtResource("7_fy1pg")]
 

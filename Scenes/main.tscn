@@ -97,10 +97,10 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.99, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(22.912882, 47.44066, 22.643925), Vector3(22.912882, 47.44066, 22.643925)]
+"values": [Vector3(22.912882, 47.44066, 22.643925), Vector3(24.316282, 51.057854, 24.047325), Vector3(22.912882, 47.44066, 22.643925)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6bp64"]
@@ -137,8 +137,7 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 script = ExtResource("1_jjgbg")
 
 [node name="Camera3D2" type="Camera3D" parent="." unique_id=827884670]
-transform = Transform3D(0.73229325, 0.12761635, 0.66892487, 7.4505793e-09, 0.982284, -0.18739846, -0.68098915, 0.13723065, 0.71932006, -30.848436, 0.7219097, 25.87849)
-visible = false
+transform = Transform3D(0.73229337, 0.12761633, 0.6689248, 7.450581e-09, 0.9822839, -0.18739845, -0.68098927, 0.13723063, 0.71932, -30.848436, 0.7219097, 25.87849)
 fov = 31.5
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1375282108]
@@ -193,8 +192,8 @@ transform = Transform3D(0.9999515, 0, 0.00989607, 0, 1, 0, -0.00989607, 0, 0.999
 [node name="forest3" parent="." unique_id=1760353065 instance=ExtResource("5_kry3j")]
 transform = Transform3D(-0.5659748, 0, -0.8244236, 0, 1, 0, 0.8244236, 0, -0.5659748, -84.12009, 0.042998314, -2.578556)
 
-[node name="forest3" parent="forest3" unique_id=783709425 instance=ExtResource("5_kry3j")]
-transform = Transform3D(-0.5659748, 0, -0.8244236, 0, 1, 0, 0.8244236, 0, -0.5659748, 20.805878, 0.042998314, -37.64625)
+[node name="forest8" parent="." unique_id=783709425 instance=ExtResource("5_kry3j")]
+transform = Transform3D(-0.35934684, 0, 0.9332059, 0, 1, 0, -0.9332059, 0, -0.35934684, -64.85923, 0.08599663, 35.88113)
 
 [node name="forest6" parent="." unique_id=960878405 instance=ExtResource("5_kry3j")]
 transform = Transform3D(0.64181185, 0, -0.7668631, 0, 1, 0, 0.7668631, 0, 0.64181185, 25.181808, 0.054973602, 53.587666)

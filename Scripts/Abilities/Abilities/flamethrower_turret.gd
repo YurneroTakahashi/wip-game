@@ -2,8 +2,8 @@ extends Node3D
 
 # Параметры турели
 var duration: float = 8.0
-var damage_per_second: int = 20
-var fire_rate: float = 0.3
+var damage_per_second: int = 1
+var fire_rate: float = 0.1
 @export var range: float = 20.0
 @export var cone_angle: float = 70.0  # Полный угол сектора
 

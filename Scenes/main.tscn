@@ -4,7 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://vyinsluaq7wt" path="res://Scenes/player_castle.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://bk2i6xjx6qbv" path="res://Scripts/enemy_spawner.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://sqh0nqryvljn" path="res://zemlya.fbx" id="4_jjvhh"]
+[ext_resource type="AudioStream" uid="uid://dwvhf6ocg16di" path="res://FULL_AUDIO_MUSIC_SOUNDS.wav" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://dxsyjx7tpjr24" path="res://forest.fbx" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://cumigsaahbmeg" path="res://Scenes/hud.tscn" id="6_21xkr"]
 
 [sub_resource type="Animation" id="Animation_jjvhh"]
 resource_name = "RESET"
@@ -146,6 +148,7 @@ transform = Transform3D(0.7071068, -0.6199216, 0.34014294, 0, 0.4810348, 0.87670
 fov = 70.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D" unique_id=1466118747]
+active = false
 libraries/ = SubResource("AnimationLibrary_6bp64")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=765643644]
@@ -165,6 +168,22 @@ shadow_blur = 0.2
 
 [node name="EdgeSpawner" type="Node" parent="." unique_id=572140672]
 script = ExtResource("3_8gbba")
+spawn_burst_size = null
+civ_spawn_burst_size = null
+max_enemies_total = null
+spawn_interval = null
+civ_spawn_interval = null
+time_between_waves = null
+wave_start_delay = null
+warmup_enemies_base = null
+warmup_enemies_scaling = null
+battle_enemies_base = null
+battle_enemies_scaling = null
+break_enemies_base = null
+break_enemies_scaling = null
+civilians_per_wave_base = null
+civilians_per_wave_scaling = null
+boss_wave_interval = null
 metadata/_custom_type_script = "uid://bk2i6xjx6qbv"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1699274548]
@@ -184,6 +203,9 @@ mesh = SubResource("PlaneMesh_jjvhh")
 
 [node name="zemlya" parent="." unique_id=903034683 instance=ExtResource("4_jjvhh")]
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=390036198]
+stream = ExtResource("5_kry3j")
+autoplay = true
 [node name="forest" parent="." unique_id=1084070509 instance=ExtResource("5_kry3j")]
 transform = Transform3D(-0.92418647, 0, 0.3819415, 0, 1, 0, -0.3819415, 0, -0.92418647, -45.60851, 0.21799445, -50.893932)
 
@@ -207,5 +229,7 @@ transform = Transform3D(-0.99189156, 0, 0.12711641, 0, 1, 0, -0.12711641, 0, -0.
 
 [node name="forest4" parent="." unique_id=770656622 instance=ExtResource("5_kry3j")]
 transform = Transform3D(0.117121965, 0, -0.9931194, 0, 1, 0, 0.9931194, 0, 0.117121965, 42.067215, -0.025110006, -65.31874)
+
+[node name="HUD" parent="." unique_id=2135123236 instance=ExtResource("6_21xkr")]
 
 [editable path="zemlya"]

@@ -7,7 +7,7 @@ var has_landed: bool = false
 
 func _ready():
 	# Настройка физики
-	gravity_scale = 2.0
+	gravity_scale = 80.0
 	
 	# Добавляем визуал бутылки (твоя модель)
 	var bottle_model = load("res://assets/models/bottle.glb")  # Укажи путь к твоей модели

@@ -99,15 +99,16 @@ light_volumetric_fog_energy = 0.5
 shadow_enabled = true
 shadow_blur = 0.2
 
-[node name="PlayerCastle" parent="." unique_id=1418699478 instance=ExtResource("2_bo1nx")]
+[node name="PlayerCastle3" parent="." unique_id=1418699478 instance=ExtResource("2_bo1nx")]
+visible = false
 
-[node name="charch" parent="PlayerCastle/charch_anim" parent_id_path=PackedInt32Array(1418699478, 177845916) index="0" unique_id=1490233088]
+[node name="charch" parent="PlayerCastle3/charch_anim" parent_id_path=PackedInt32Array(1418699478, 177845916) index="0" unique_id=1490233088]
 transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
 
-[node name="bell" parent="PlayerCastle/charch_anim/charch" index="0" unique_id=448804329]
-transform = Transform3D(0.98336625, -2.7372633e-07, 0.18163383, 2.8334222e-07, 1, -2.6993096e-08, -0.18163383, 7.800863e-08, 0.98336625, -5.790731e-05, -7.933639e-06, 0.112334706)
+[node name="bell" parent="PlayerCastle3/charch_anim/charch" index="0" unique_id=448804329]
+transform = Transform3D(0.98336625, -2.7372636e-07, 0.18163384, 2.8334225e-07, 1, -2.6993106e-08, -0.18163384, 7.8008654e-08, 0.98336625, -5.790731e-05, -7.933639e-06, 0.112334706)
 
-[node name="ground" parent="PlayerCastle/zemlya_anim" parent_id_path=PackedInt32Array(1418699478, 285873050) index="0" unique_id=1661075748]
+[node name="ground" parent="PlayerCastle3/zemlya_anim" parent_id_path=PackedInt32Array(1418699478, 285873050) index="0" unique_id=1661075748]
 material_override = SubResource("StandardMaterial3D_6bp64")
 
 [node name="EdgeSpawner" type="Node" parent="." unique_id=572140672]
@@ -153,8 +154,10 @@ transform = Transform3D(0.6008814, 0, -0.79933906, 0, 1, 0, 0.79933906, 0, 0.600
 
 [node name="HUD" parent="." unique_id=2135123236 instance=ExtResource("6_21xkr")]
 
-[editable path="PlayerCastle"]
-[editable path="PlayerCastle/charch_anim"]
-[editable path="PlayerCastle/stage_1"]
-[editable path="PlayerCastle/zemlya_anim"]
+[node name="PlayerCastle" parent="." unique_id=545079881 instance=ExtResource("2_bo1nx")]
+
+[editable path="PlayerCastle3"]
+[editable path="PlayerCastle3/charch_anim"]
+[editable path="PlayerCastle3/stage_1"]
+[editable path="PlayerCastle3/zemlya_anim"]
 [editable path="zemlya"]

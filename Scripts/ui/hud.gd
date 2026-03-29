@@ -19,6 +19,7 @@ extends Control
 @onready var ability2_button: Button = $AbilityPanel/Ability2
 @onready var ability3_button: Button = $AbilityPanel/Ability3
 @onready var player_castle: CharacterBody3D = $"../PlayerCastle"
+signal castle_damaged(current_hp: int, max_hp: int)
 
 
 # Таймеры
@@ -41,6 +42,7 @@ func _ready():
 	# Получаем здоровье замка
 	var castle = get_tree().get_first_node_in_group("castle")
 	if castle and castle.has_method("get_health"):
+		print("ASDAEWQ")
 		_update_health(castle.get_health(), castle.get_max_health())
 	
 	print("HUD integrated with GameManager!")
@@ -118,7 +120,8 @@ func _process(delta):
 		wave_timer -= delta
 		if wave_timer > 0:
 			timer_label.text = "⏱ %.0f" % wave_timer
-
+	var castle = get_tree().get_first_node_in_group("castle")
+	_update_health(castle.get_health(), castle.get_max_health())
 func _update_health(current: int, max: int):
 	health_bar.max_value = max
 	health_bar.value = current

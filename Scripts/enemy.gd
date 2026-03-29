@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var damage_to_castle: int = 10
 @export var health: int = 5
 @export var arrival_distance: int = 1
-
+@export var razmer: float = 3.0
 var target_castle: Node3D
 var debug_label: Label3D
 var is_navigation_initialized: bool = false
@@ -36,7 +36,8 @@ func setup_type(type: int) -> void:
 		girl_run.visible = false
 		man_run.visible = true
 		print("[ENEMY] Type: SPEEDSTER, speed: ", speed)
-	
+	girl_run.scale = Vector3(razmer,razmer,razmer)
+	man_run.scale = Vector3(razmer,razmer,razmer)
 	# Обновляем скорость в NavigationAgent
 	if navigation_agent_3d and is_navigation_initialized:
 		navigation_agent_3d.max_speed = speed

@@ -86,9 +86,11 @@ _data = {
 }
 
 [node name="HolyWater" type="Node3D" unique_id=528239961]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_6pukh")
 
 [node name="water" type="Node3D" parent="." unique_id=1686205282]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="Plane_010" type="MeshInstance3D" parent="water" unique_id=1861283374]
 transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0.055118755, 0)
@@ -99,3 +101,4 @@ mesh = SubResource("ArrayMesh_0td6m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="water" unique_id=2061189228]
 libraries/ = SubResource("AnimationLibrary_xeeeg")
+autoplay = &"water_move"

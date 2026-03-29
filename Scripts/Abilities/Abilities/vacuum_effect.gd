@@ -14,7 +14,7 @@ func setup(pos: Vector3, rad: float, strength: float, dur: float):
 	radius = rad
 	pull_strength = strength
 	duration = dur
-	
+	position = center_position
 	print("=== VACUUM SETUP ===")
 	print("Center: ", center_position)
 	print("Radius: ", radius)

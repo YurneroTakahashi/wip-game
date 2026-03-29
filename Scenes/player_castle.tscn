@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dvtbtooe6l45w" path="res://stage_2.fbx" id="5_fy1pg"]
 [ext_resource type="PackedScene" uid="uid://ce2rum8lolvvp" path="res://stage_3.fbx" id="6_4jblk"]
 [ext_resource type="PackedScene" uid="uid://bfo1ukeht46aw" path="res://zemlya_anim.fbx" id="7_fy1pg"]
-[ext_resource type="Texture2D" uid="uid://c3pdt4ntkqxns" path="res://vfx/T_fire01.png" id="8_4jblk"]
+[ext_resource type="Texture2D" uid="uid://c3pdt4ntkqxns" path="res://vfx/particles/T_fire01.png" id="8_4jblk"]
 [ext_resource type="PackedScene" uid="uid://8kixxt5f435q" path="res://vfx/VFX/Scenes/VFX_Level_up.tscn" id="9_jcm6y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fy1pg"]
@@ -175,6 +175,7 @@ vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 albedo_texture = ExtResource("8_4jblk")
 billboard_mode = 3
+billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
@@ -233,6 +234,14 @@ colors = PackedColorArray(1, 1, 1, 1, 0.31412715, 0.31412715, 0.31412715, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_e3tbt"]
 gradient = SubResource("Gradient_75h1o")
 
+[sub_resource type="Curve" id="Curve_wpxag"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0.13063064, 3), 0.0, 0.0, 0, 0, Vector2(0.9234234, 0.8764045), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_e3tbt"]
+curve = SubResource("Curve_wpxag")
+
 [sub_resource type="Curve" id="Curve_j55va"]
 _limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0.13063064, 3), 0.0, 0.0, 0, 0, Vector2(0.9234234, 0.8764045), 0.0, 0.0, 0, 0]
@@ -249,6 +258,9 @@ angle_max = 70.60001
 direction = Vector3(1, 0.835, 0)
 spread = 40.574
 initial_velocity_max = 0.39999998
+scale_min = 0.0
+scale_max = 3.5
+scale_curve = SubResource("CurveTexture_e3tbt")
 scale_over_velocity_min = 107.689995
 scale_over_velocity_max = 658.47
 scale_over_velocity_curve = SubResource("CurveTexture_2s2ad")
@@ -262,29 +274,21 @@ turbulence_noise_speed_random = 3.04
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7972973, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7865169), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_75h1o"]
+[sub_resource type="CurveTexture" id="CurveTexture_jcm6y"]
 curve = SubResource("Curve_lw25r")
 
 [sub_resource type="Gradient" id="Gradient_e3tbt"]
 colors = PackedColorArray(1, 1, 1, 1, 0.31412715, 0.31412715, 0.31412715, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_j55va"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_v4e47"]
 gradient = SubResource("Gradient_e3tbt")
 
 [sub_resource type="Curve" id="Curve_2s2ad"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_fitcw"]
+[sub_resource type="CurveTexture" id="CurveTexture_75h1o"]
 curve = SubResource("Curve_2s2ad")
-
-[sub_resource type="Curve" id="Curve_wpxag"]
-_limits = [0.0, 3.0, 0.0, 1.0]
-_data = [Vector2(0.13063064, 3), 0.0, 0.0, 0, 0, Vector2(0.9234234, 0.8764045), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_7jk0f"]
-curve = SubResource("Curve_wpxag")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0k776"]
 lifetime_randomness = 0.28
@@ -313,12 +317,12 @@ radial_accel_max = -2.2351742e-06
 tangential_accel_min = -100.0
 tangential_accel_max = -2.2351742e-06
 scale_min = 0.0
-scale_curve = SubResource("CurveTexture_fitcw")
+scale_curve = SubResource("CurveTexture_75h1o")
 scale_over_velocity_max = 1.0
-scale_over_velocity_curve = SubResource("CurveTexture_7jk0f")
+scale_over_velocity_curve = SubResource("CurveTexture_e3tbt")
 color = Color(0.5889948, 0.77744275, 0.84549344, 1)
-color_ramp = SubResource("GradientTexture1D_j55va")
-alpha_curve = SubResource("CurveTexture_75h1o")
+color_ramp = SubResource("GradientTexture1D_v4e47")
+alpha_curve = SubResource("CurveTexture_jcm6y")
 turbulence_noise_strength = 12.41
 turbulence_noise_speed_random = 3.04
 
@@ -341,25 +345,28 @@ shape = SubResource("BoxShape3D_eeqex")
 
 [node name="charch_anim" parent="." unique_id=177845916 instance=ExtResource("3_eeqex")]
 
-[node name="charch" parent="charch_anim" index="0" unique_id=853035954]
-transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, -2.5887356, 0)
+[node name="charch" parent="charch_anim" index="0" unique_id=1490233088]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, -5.6881, 0)
 
-[node name="bell" parent="charch_anim/charch" index="0" unique_id=531576131]
+[node name="bell" parent="charch_anim/charch" index="0" unique_id=448804329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.790731e-05, -7.933639e-06, 0.0021599198)
 
-[node name="AnimationPlayer" parent="charch_anim" index="1" unique_id=416018164]
+[node name="AnimationPlayer" parent="charch_anim" index="1" unique_id=1472154469]
 libraries/ = SubResource("AnimationLibrary_75h1o")
 
 [node name="stage_1" parent="." unique_id=1905799440 instance=ExtResource("4_1oybr")]
 
 [node name="stage_2" parent="." unique_id=1396932878 instance=ExtResource("5_fy1pg")]
+visible = false
 
 [node name="stage_3" parent="." unique_id=1912996612 instance=ExtResource("6_4jblk")]
+visible = false
 
 [node name="zemlya_anim" parent="." unique_id=285873050 instance=ExtResource("7_fy1pg")]
 
 [node name="gun_shots" type="GPUParticles3D" parent="." unique_id=2124551477]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.776382, -51.25038, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_jcm6y")
 emitting = false
 lifetime = 1.38
@@ -370,7 +377,7 @@ process_material = SubResource("ParticleProcessMaterial_2s2ad")
 draw_pass_1 = SubResource("QuadMesh_wpxag")
 
 [node name="rocket_launch_vfx" type="GPUParticles3D" parent="." unique_id=1795020741]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -47.904564, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.693033, 0)
 material_override = SubResource("StandardMaterial3D_jcm6y")
 lifetime = 1.38
 speed_scale = 5.63

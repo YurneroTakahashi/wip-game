@@ -26,7 +26,7 @@ func _ready():
 	health_component.max_health = 100
 	health_component.current_health = 100
 	add_to_group("castle")
-	
+	animation_player.play("RESET")
 	stage_1.visible = true
 	stage_2.visible = false
 	stage_3.visible = false

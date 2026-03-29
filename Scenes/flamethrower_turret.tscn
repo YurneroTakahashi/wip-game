@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvm2ctplqek2j" path="res://Scripts/Abilities/Abilities/flamethrower_turret.gd" id="1_anm6h"]
 [ext_resource type="PackedScene" uid="uid://bifr5nq4swt8f" path="res://flamethrower.fbx" id="2_2vt72"]
+[ext_resource type="PackedScene" uid="uid://dq7pwctof6nr3" path="res://vfx/vfx_ire.tscn" id="3_y37nw"]
 
 [sub_resource type="Animation" id="Animation_2vt72"]
 resource_name = "mixamo_com"
@@ -160,10 +161,50 @@ _data = {
 &"mixamo_com": SubResource("Animation_2vt72")
 }
 
+[sub_resource type="Curve" id="Curve_any65"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5379061, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5526686), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ibd11"]
+curve = SubResource("Curve_any65")
+
+[sub_resource type="Gradient" id="Gradient_y83b5"]
+offsets = PackedFloat32Array(0.26294822, 0.49800798, 0.90039843)
+colors = PackedColorArray(0.9647059, 0.90588236, 0.85490197, 1, 0.9481649, 0.6909583, 0.54262537, 1, 0.18000486, 0.18000486, 0.18000486, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t6x2c"]
+gradient = SubResource("Gradient_y83b5")
+
+[sub_resource type="Curve" id="Curve_17cvn"]
+_data = [Vector2(0.007220216, 0.50522393), 0.0, 1.6920117, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_43icn"]
+curve = SubResource("Curve_17cvn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y37nw"]
+lifetime_randomness = 0.08
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(1, -0.135, 0)
+spread = 46.643
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 0.49997765
+gravity = Vector3(0, 0, 0)
+scale_min = 0.9
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_43icn")
+color = Color(1.8249983, 1.0570698, 0.4832617, 1)
+color_ramp = SubResource("GradientTexture1D_t6x2c")
+alpha_curve = SubResource("CurveTexture_ibd11")
+
 [node name="FlamethrowerTurret" type="Node3D" unique_id=2024162409]
 script = ExtResource("1_anm6h")
-range = null
-cone_angle = null
 
 [node name="flamethrower" parent="." unique_id=1465071686 instance=ExtResource("2_2vt72")]
 
@@ -194,4 +235,14 @@ bones/23/rotation = Quaternion(0.30757278, 0.020008182, -0.0064529157, 0.9512923
 libraries/ = SubResource("AnimationLibrary_y37nw")
 autoplay = &"mixamo_com"
 
+[node name="vfx_ire" parent="." unique_id=810316383 instance=ExtResource("3_y37nw")]
+transform = Transform3D(-0.0031066327, 0, -0.9999952, 0, 1, 0, 0.9999952, 0, -0.0031066327, 0, -7.2834244, 1.0444822)
+
+[node name="fire" parent="vfx_ire" index="0" unique_id=1469098750]
+amount = 2000
+lifetime = 6.63
+speed_scale = 11.76
+process_material = SubResource("ParticleProcessMaterial_y37nw")
+
 [editable path="flamethrower"]
+[editable path="vfx_ire"]

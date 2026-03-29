@@ -29,6 +29,8 @@ class_name EdgeSpawner
 @export var civilians_per_wave_base: int = 5
 @export var civilians_per_wave_scaling: float = 2.0
 
+@export var boss_scene: PackedScene
+@export var boss_wave_interval: int = 3  # Босс появляется каждые 3 волны
 
 @onready var player_castle: CharacterBody3D = $"../PlayerCastle"
 
@@ -63,6 +65,8 @@ func _ready():
 		enemy_scene = preload("res://Scenes/Enemy.tscn")
 	if not civilian_scene:
 		civilian_scene = preload("res://Scenes/civilian.tscn")
+	if not boss_scene:
+		boss_scene = preload("res://Scenes/boss.tscn")
 	
 	map_manager = get_node("/root/Map_Manager")
 	if map_manager == null:
@@ -140,6 +144,7 @@ func _activate_wave():
 	
 	print("=== Wave ", current_wave, " STARTED! ===")
 	wave_started.emit(current_wave)
+	_spawn_boss()
 
 func _end_wave():
 	current_state = SpawnerState.BETWEEN_WAVES
@@ -203,19 +208,25 @@ func _try_spawn_enemy_batch():
 		_set_phase(current_phase_idx)
 
 func _spawn_single_enemy():
-	var enemy = enemy_scene.instantiate()
-	enemy.scale = Vector3(4.0,4.0,4.0)
-	var spawn_pos = map_manager.get_random_edge_position()
+	var enemy_instance = enemy_scene.instantiate()
+	var spawn_position = map_manager.get_random_edge_position()
 	
-	spawn_pos.x += randf_range(-1.0, 1.0)
-	spawn_pos.z += randf_range(-1.0, 1.0)
-	enemy.global_position = spawn_pos	
+	spawn_position.x += randf_range(-1.0, 1.0)
+	spawn_position.z += randf_range(-1.0, 1.0)
 	
-	if enemy.has_method("set_target"):
-		enemy.set_target(map_manager.castle_position)
-	get_tree().current_scene.add_child(enemy)
-	enemy._setup_type(1)
-
+	enemy_instance.global_position = spawn_position
+	
+	# ВАЖНО: вызываем ДО добавления в сцену
+	var enemy_type = randi() % 2
+	
+	
+	if enemy_instance.has_method("set_target"):
+		enemy_instance.set_target(map_manager.castle_position)
+	get_tree().current_scene.add_child(enemy_instance)
+	enemy_instance.setup_type(enemy_type)
+	
+	
+	print("[SPAWNER] Spawned enemy type: ", "SPEEDSTER" if enemy_type == 1 else "NORMAL")
 func _spawn_single_civ():
 	var civ = civilian_scene.instantiate()
 	var spawn_pos = map_manager.get_random_edge_position()
@@ -239,3 +250,18 @@ func get_civilians_saved_this_wave() -> int:
 
 func get_civilians_to_save() -> int:
 	return civilians_to_spawn_in_wave
+
+
+func _spawn_boss():
+	if not boss_scene:
+		print("ERROR: Boss scene not assigned!")
+		return
+	
+	var boss = boss_scene.instantiate()
+	var spawn_pos = map_manager.get_random_edge_position()
+	spawn_pos.x += randf_range(-2.0, 2.0)
+	spawn_pos.z += randf_range(-2.0, 2.0)
+	boss.global_position = spawn_pos
+	
+	get_tree().current_scene.add_child(boss)
+	print("BOSS SPAWNED at wave ", current_wave)

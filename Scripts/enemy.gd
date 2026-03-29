@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 @export var speed: float = 8.0
 @export var damage_to_castle: int = 10
-@export var health: int = 5
+@export var health: int = 2
 @export var arrival_distance: int = 1
 @export var razmer: float = 3.0
 var target_castle: Node3D

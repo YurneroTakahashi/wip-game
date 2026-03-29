@@ -69,7 +69,7 @@ func _draw_cone_visual():
 	radius_circle.material_override = circle_material
 	radius_circle.position.y = 0.05
 	radius_circle.set_meta("cone_visual", true)
-	add_child(radius_circle)
+	#add_child(radius_circle)
 	
 	# 2. Создаем точки границы сектора
 	var points_count = 30
@@ -89,7 +89,7 @@ func _draw_cone_visual():
 		(point.mesh as SphereMesh).radius = 0.12
 		
 		var point_material = StandardMaterial3D.new()
-		point_material.albedo_color = Color(1, 0.5, 0, 0.9)
+		point_material.albedo_color = Color(0.561, 0.476, 1.0, 0.9)
 		point_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 		point.material_override = point_material
 		

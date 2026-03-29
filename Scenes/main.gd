@@ -26,8 +26,8 @@ func _ready():
 		map_manager.castle_position = castle.global_position
 	
 	# Подключаем сигналы GameManager
-	animation_player.play("intro_animation")
-	await animation_player.animation_finished
+	#animation_player.play("intro_animation")
+	#await animation_player.animation_finished
 	camera_3d.current = true
 	# Создаем визуальные границы (опционально)
 	

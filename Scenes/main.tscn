@@ -29,15 +29,21 @@ tracks/1/keys = {
 "values": [Vector3(0, 24.709938, 18.491655)]
 }
 
-[sub_resource type="Animation" id="Animation_kry3j"]
-resource_name = "stage_1"
-tracks/0/type = "position_3d"
+[sub_resource type="Animation" id="Animation_6bp64"]
+resource_name = "intro_animation"
+length = 4.0333333
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = false
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array()
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5333333, 3),
+"transitions": PackedFloat32Array(6.062863, 1, 1),
+"update": 0,
+"values": [Vector3(-21.43959, 3.1499197, 26.9959), Vector3(-21.540543, 3.1238682, 26.98391), Vector3(-30.848436, 0.7219097, 25.87849)]
+}
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
@@ -182,7 +188,6 @@ debug_color = Color(0.73059726, 0.39120156, 0.69431114, 0.41960785)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D" unique_id=734291081]
 transform = Transform3D(338.0319, 0, 0, 0, 0.9999994, 0, 0, 0, 436.88885, 0, 0, 0)
-visible = false
 mesh = SubResource("PlaneMesh_jjvhh")
 
 [node name="zemlya" parent="." unique_id=903034683 instance=ExtResource("4_jjvhh")]

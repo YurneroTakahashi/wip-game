@@ -18,6 +18,7 @@ extends Control
 @onready var ability1_button: Button = $AbilityPanel/Ability1
 @onready var ability2_button: Button = $AbilityPanel/Ability2
 @onready var ability3_button: Button = $AbilityPanel/Ability3
+@onready var player_castle: CharacterBody3D = $"../PlayerCastle"
 
 
 # Таймеры
@@ -47,9 +48,8 @@ func _ready():
 func _setup_signals():
 	# Сигналы GameManager
 	GameManager.mana_changed.connect(_update_mana)
-	GameManager.castle_damaged.connect(_update_health)
+	player_castle.castle_damaged.connect(_update_health)
 	GameManager.game_over.connect(_on_game_over)
-	
 	# Сигналы спавнера
 	var spawner = get_tree().get_first_node_in_group("spawners")
 	if spawner:
@@ -86,7 +86,7 @@ func _setup_ability_buttons():
 	ability1_button.pressed.connect(_on_ability1_pressed)
 	
 	# Кнопка E (Ядовитая бутылка)
-	ability2_button.text = "W\nЯД"
+	ability2_button.text = "W\nСВЯТАЯ ВОДА"
 	ability2_button.pressed.connect(_on_ability2_pressed)
 	
 	# Кнопка R (Огнемётчик)

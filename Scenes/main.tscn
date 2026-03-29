@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://vyinsluaq7wt" path="res://Scenes/player_castle.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://bk2i6xjx6qbv" path="res://Scripts/enemy_spawner.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://sqh0nqryvljn" path="res://zemlya.fbx" id="4_jjvhh"]
+[ext_resource type="AudioStream" uid="uid://dwvhf6ocg16di" path="res://FULL_AUDIO_MUSIC_SOUNDS.wav" id="5_kry3j"]
 
 [sub_resource type="Animation" id="Animation_jjvhh"]
 resource_name = "RESET"
@@ -113,5 +114,9 @@ visible = false
 mesh = SubResource("PlaneMesh_jjvhh")
 
 [node name="zemlya" parent="." unique_id=903034683 instance=ExtResource("4_jjvhh")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=390036198]
+stream = ExtResource("5_kry3j")
+autoplay = true
 
 [editable path="zemlya"]

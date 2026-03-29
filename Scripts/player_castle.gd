@@ -21,8 +21,8 @@ var passive_attack_timer: float = 0.0
 var civs: int = 0
 var stage: int = 0
 func _ready():
-	health_component.max_health = 20000
-	health_component.current_health = 20000
+	health_component.max_health = 100
+	health_component.current_health = 100
 	add_to_group("castle")
 	
 	stage_1.visible = true
@@ -94,7 +94,11 @@ func take_damage(dmg: int):
 func accept_civilian():
 	civs += 1
 
+func get_health() -> int:
+	return health_component.current_health
 
+func get_max_health() -> int:
+	return health_component.max_health
 
 
 func _upgrade() -> void:

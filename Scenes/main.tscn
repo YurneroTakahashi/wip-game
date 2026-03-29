@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bk2i6xjx6qbv" path="res://Scripts/enemy_spawner.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://sqh0nqryvljn" path="res://zemlya.fbx" id="4_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://dxsyjx7tpjr24" path="res://forest.fbx" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://cumigsaahbmeg" path="res://Scenes/hud.tscn" id="6_21xkr"]
 
 [sub_resource type="Animation" id="Animation_jjvhh"]
 resource_name = "RESET"
@@ -110,6 +111,22 @@ shadow_blur = 0.2
 
 [node name="EdgeSpawner" type="Node" parent="." unique_id=572140672]
 script = ExtResource("3_8gbba")
+spawn_burst_size = null
+civ_spawn_burst_size = null
+max_enemies_total = null
+spawn_interval = null
+civ_spawn_interval = null
+time_between_waves = null
+wave_start_delay = null
+warmup_enemies_base = null
+warmup_enemies_scaling = null
+battle_enemies_base = null
+battle_enemies_scaling = null
+break_enemies_base = null
+break_enemies_scaling = null
+civilians_per_wave_base = null
+civilians_per_wave_scaling = null
+boss_wave_interval = null
 metadata/_custom_type_script = "uid://bk2i6xjx6qbv"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1699274548]
@@ -146,5 +163,7 @@ transform = Transform3D(-0.9887426, 0, 0.14963876, 0, 1, 0, -0.14963876, 0, -0.9
 
 [node name="forest3" parent="." unique_id=1659073288 instance=ExtResource("5_kry3j")]
 transform = Transform3D(0.6008814, 0, -0.79933906, 0, 1, 0, 0.79933906, 0, 0.6008814, -88.72453, 0.65398335, -2.5244331)
+
+[node name="HUD" parent="." unique_id=2135123236 instance=ExtResource("6_21xkr")]
 
 [editable path="zemlya"]

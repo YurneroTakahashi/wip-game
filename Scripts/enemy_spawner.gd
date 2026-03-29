@@ -50,13 +50,11 @@ var current_state: SpawnerState = SpawnerState.BETWEEN_WAVES
 var state_timer: float = 0.0
 var spawn_timer: float = 0.0
 var civ_timer: float = 0.0
+signal wave_started(wave_number: int)
+signal wave_ended(wave_number: int, civilians_saved: int)
+signal trading_phase_started(time_remaining: float)
 
 @onready var map_manager: MapManager = null
-
-# Сигналы для UI
-signal wave_ended(wave_number: int, civilians_saved: int)
-signal wave_started(wave_number: int)
-signal trading_phase_started(time_remaining: float)
 
 func _ready():
 	add_to_group("spawners")
@@ -124,7 +122,7 @@ func _start_next_wave():
 	civilians_spawned = 0
 	civilians_saved = 0
 	civilians_to_spawn_in_wave = int(civilians_per_wave_base + (current_wave - 1) * civilians_per_wave_scaling)
-	
+	wave_started.emit(current_wave)
 	# Генерируем фазы
 	_generate_phases()
 	current_phase_idx = 0
@@ -144,7 +142,7 @@ func _activate_wave():
 	
 	print("=== Wave ", current_wave, " STARTED! ===")
 	wave_started.emit(current_wave)
-	_spawn_boss()
+	#_spawn_boss()
 
 func _end_wave():
 	current_state = SpawnerState.BETWEEN_WAVES

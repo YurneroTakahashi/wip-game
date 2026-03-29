@@ -49,10 +49,13 @@ func change_wave(wave: int):
 	elif cur_wave == 5:
 		castle_radius = 40
 		
-func victory():
-	print("POBEDA URAAA")
+func on_game_over(victory: bool):
+	if victory:
+		print("POBEDA URAAA")
+	else:
+		print("PROEBALI")
 	GameManager.is_game_active = false
-	GameManager.game_over.emit(true)
+
 	
 	# Останавливаем спавн врагов
 	var spawners = get_tree().get_nodes_in_group("spawners")

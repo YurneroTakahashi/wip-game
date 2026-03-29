@@ -5,12 +5,14 @@ extends CharacterBody3D
 @export var damage_to_castle: int = 10
 @export var health: int = 5
 @export var arrival_distance: float = 14  # Дистанция для атаки замка
-
+@export var razmer: float = 2.0
 var target_castle: Node3D
 var navigation_agent: NavigationAgent3D
 var debug_label: Label3D
 var is_navigation_initialized: bool = false
 var is_moving: bool = true
+
+@onready var nun_run: Node3D = $nun_run
 
 func _ready():
 	add_to_group("civilians")
@@ -19,7 +21,7 @@ func _ready():
 
 func _setup_visuals():
 	# Визуал врага
-	
+	nun_run.scale = Vector3(razmer,razmer,razmer)
 	add_child(debug_label)
 
 func _initialize_navigation():

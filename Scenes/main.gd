@@ -24,7 +24,6 @@ func _ready():
 		map_manager.castle_position = castle.global_position
 	
 	# Подключаем сигналы GameManager
-	GameManager.game_over.connect(_on_game_over)
 	
 	# Создаем визуальные границы (опционально)
 	
@@ -55,9 +54,7 @@ func _create_visual_boundaries():
 		add_child(marker)
 
 func _on_game_over(victory: bool):
-	if not victory:
-		print("Game Over! You lost!")
-		# Здесь можно добавить экран поражения
+	GameManager.on_game_over(victory)
 
 
 func _setup_abilities():

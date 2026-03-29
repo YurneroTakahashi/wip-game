@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://cumigsaahbmeg"]
+
+[ext_resource type="Script" uid="uid://djoxci5m3ybxm" path="res://Scripts/ui/hud.gd" id="1_e0onf"]
+
+[node name="HUD" type="Control" unique_id=2135123236]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e0onf")
+
+[node name="TopPanel" type="Panel" parent="." unique_id=855551892]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TopPanel" unique_id=1773974640]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WaveLabel" type="Label" parent="TopPanel/VBoxContainer" unique_id=31294407]
+layout_mode = 2
+
+[node name="CiviliansLabel" type="Label" parent="TopPanel/VBoxContainer" unique_id=2063303584]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="TopPanel/VBoxContainer" unique_id=1801217983]
+layout_mode = 2
+
+[node name="BottomPanel" type="Panel" parent="." unique_id=904173146]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00086805556
+anchor_top = 0.87191355
+anchor_right = 0.00086805556
+anchor_bottom = 0.87191355
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomPanel" unique_id=1428759933]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthLabel" type="Label" parent="BottomPanel/HBoxContainer" unique_id=376396915]
+layout_mode = 2
+
+[node name="ManaLabel" type="Label" parent="BottomPanel/HBoxContainer" unique_id=1326133584]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BottomPanel" unique_id=1979816384]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="BottomPanel/HBoxContainer2" unique_id=165705511]
+layout_mode = 2
+show_percentage = false
+
+[node name="ManaBar" type="ProgressBar" parent="BottomPanel/HBoxContainer2" unique_id=1231367701]
+layout_mode = 2
+max_value = 20000.0
+show_percentage = false
+
+[node name="CenterPanel" type="Panel" parent="." unique_id=1310688195]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NotificationLabel" type="Label" parent="CenterPanel" unique_id=707509151]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AbilityPanel" type="HBoxContainer" parent="." unique_id=1937761350]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 565.0
+offset_right = 41.0
+offset_bottom = 605.0
+
+[node name="Ability1" type="Button" parent="AbilityPanel" unique_id=1867293883]
+layout_mode = 2
+
+[node name="Ability2" type="Button" parent="AbilityPanel" unique_id=1585780108]
+layout_mode = 2
+
+[node name="Ability3" type="Button" parent="AbilityPanel" unique_id=1796930087]
+layout_mode = 2

@@ -39,7 +39,9 @@ func _delayed_init():
 		if not is_instance_valid(enemy):
 			print("Invalid enemy instance")
 			continue
-		
+		if enemy.is_in_group("bosses"):
+			print("Skipping boss, vacuum doesn't affect bosses!")
+			continue
 		var distance = center_position.distance_to(enemy.global_position)
 		print("Enemy at: ", enemy.global_position, " distance: ", distance)
 		
